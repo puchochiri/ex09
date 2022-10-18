@@ -334,6 +334,7 @@ $(document).ready(function(){
 	
 	var replyer = null;
 	
+	/*  에러아님 */
 	<sec:authorize access="isAuthenticated()">
 		replyer = '<sec:authentication property="principal.username"/>';
 	</sec:authorize>
