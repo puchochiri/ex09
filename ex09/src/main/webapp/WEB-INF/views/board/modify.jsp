@@ -70,7 +70,7 @@
 					<div class="panel-body">
 					<form role="form" action="/board/modify" method="post">
 					<!-- 추가 -->
-					<input type='hidden' name="${_csrf.parameterName}" value="${_csrf.token}">
+					<input type='hidden' name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 					<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 					<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
@@ -237,6 +237,8 @@ function checkExtension(fileName, fileSize) {
 	
 }
 
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
 
 $("input[type='file']").change(function(e){
 	var formData = new FormData();
@@ -255,8 +257,12 @@ $("input[type='file']").change(function(e){
 	$.ajax({
 		url: '/uploadAjaxAction',
 		processData :false,
-		contentType : false,data:
-		formData,type: 'POST',
+		contentType : false,
+		data:formData,
+		type: 'POST',
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		},
 		dataType:'json',
 		success : function(result){
 			console.log(result);
